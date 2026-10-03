@@ -1,0 +1,165 @@
+SHINZUI: WEBSITE MIT ANMELDESYSTEM AUF NETLIFY
+==============================================
+
+Ja, das läuft auf eurem Netlify-Projekt. Ihr braucht keinen weiteren Anbieter.
+Netlify liefert die Website aus, führt die Anmelde-Funktion aus und speichert die Konten im eigenen Speicher "Netlify Blobs".
+
+WICHTIG: Was anders ist als beim bisherigen Hochladen
+Das Ziehen eines Ordners auf Netlify (Drag and Drop) reicht für die Anmeldung NICHT. Die Funktion braucht ein zusätzliches
+Netlify-Paket, und das installiert Netlify nur, wenn das Projekt über GitHub verbunden ist. Dafür brauchst du ein kostenloses
+GitHub-Konto. Du lädst die Dateien einmal dort hoch, ab dann aktualisiert sich die Website bei jeder Änderung automatisch.
+
+WICHTIG: Was getestet ist und was nicht
+Die komplette Anmelde-Funktion habe ich auf meiner Seite mit einem Browser durchgespielt (Anmeldung, Passwortwechsel, Pakete,
+Rechte, Coaching, Import, Veröffentlichen). Der Speicher "Netlify Blobs" selbst und das Verbinden mit GitHub waren dabei nicht
+dabei, das konnte ich nicht ausprobieren. Wenn beim Einrichten etwas hakt, schick Claude die Fehlermeldung oder einen Screenshot.
+
+SCHRITT 1: Dateien zu GitHub hochladen
+1. Auf github.com ein kostenloses Konto anlegen und oben rechts "New repository" wählen.
+2. Name: shinzui-website. Sichtbarkeit: PRIVATE. Dann "Create repository".
+3. "uploading an existing file" wählen.
+4. ALLE Dateien und Ordner aus dem entpackten Ordner "shinzui-netlify" in das Browserfenster ziehen
+   (public, netlify, netlify.toml, package.json, .gitignore). Die CSV-Datei mit den Passwörtern NICHT hochladen.
+   Hinweis: Ordner mit Unterordnern lassen sich per Ziehen hochladen. Fehlt danach etwas, die Dateien noch einmal nachladen.
+5. Unten "Commit changes" klicken.
+
+SCHRITT 2: Netlify mit GitHub verbinden
+1. In Netlify: "Add new project" und "Import an existing project", dann GitHub wählen und den Zugriff erlauben.
+2. Das Repository shinzui-website auswählen.
+3. Die Einstellungen kommen aus der Datei netlify.toml (Veröffentlichungs-Ordner "public", Funktionen "netlify/functions").
+   Einen Build-Befehl braucht ihr nicht.
+4. Noch NICHT auf "Deploy" klicken, sondern zuerst Schritt 3 erledigen.
+
+SCHRITT 3: Startpasswort für Aden festlegen
+1. In Netlify unter den Projekteinstellungen (Site configuration) den Bereich "Environment variables" öffnen.
+2. Eine neue Variable anlegen: Name ERSTES_PASSWORT, Wert: ein langes Startpasswort (mindestens 8 Zeichen) für Aden.
+3. Jetzt "Deploy" starten bzw. einen neuen Deploy auslösen.
+
+SCHRITT 4: Domain
+Im Netlify-Projekt "Domain management": eure Domain eintragen und beim Domain-Anbieter den angezeigten Eintrag setzen.
+HTTPS richtet Netlify automatisch ein.
+
+NACH DEM ERSTEN START
+1. Öffne die Jarvis-App unter eurer-adresse/app/ (zum Beispiel shinzui.netlify.app/app/).
+2. Melde dich mit Benutzername "aden" und dem Wert von ERSTES_PASSWORT an. Aden legt sofort ein eigenes Passwort fest.
+3. Danach kann die Variable ERSTES_PASSWORT in Netlify entfernt werden.
+4. Tab "Mitglieder": hier legt Aden alle weiteren Konten an (siehe unten).
+
+DAS ROLLENMODELL (vier Ebenen pro Person)
+- Rang: Owner (Aden), Shogun, Council. Nur der Owner vergibt Ränge. Shoguns verwalten alle Mitglieder ohne Rang.
+- Teams: Fubuki, Hoshi, Akuma, Seiun, Kaze, Shinda. Mehrere pro Person möglich. Jede Person sieht die Daten ihrer Teams.
+- Funktion: Spieler, Coach, Team Manager, Caster, Social Media Manager.
+- Paket: Free, Standard, Premium (für die Community).
+- Sonderrechte: zusätzlich einzeln vergebbar, zum Beispiel "content studio" für Skyluc.
+Die Rechte einer Person ergeben sich aus allem zusammen.
+
+KONTEN ANLEGEN
+- In der App: Tab "Mitglieder", "Neues Mitglied". Name, Rang, Teams, Funktionen, Paket und Sonderrechte wählen. Benutzername und
+  Startpasswort erscheinen EINMAL auf dem Bildschirm. Jede Person muss das Passwort bei der ersten Anmeldung ändern.
+- Gleiche Personen mit zwei Namen (zum Beispiel Alex und Axcel) bekommen ein Konto. Die Ingame-Namen werden im Feld "Ingame-Namen" eingetragen.
+- Free: Jeder kann sich auf der Website selbst registrieren.
+- Eine automatische Bezahlung (z. B. Stripe) ist noch nicht eingebaut.
+
+DIE BEREICHE IN DER APP
+Jede Rolle hat ihren eigenen Bereich. Die App zeigt jeder Person nur die Bereiche, die zu ihren Rollen gehören:
+- Shogun-Zentrale (Owner und Shogun): Mitglieder anlegen, Rollen ändern, Passwörter zurücksetzen.
+- Council-Ansicht (Council): lesender Einblick.
+- Team Fubuki, Hoshi, Akuma, Seiun, Kaze, Shinda: Kader mit OP.GG-Links und Smurfs. Jede Person sieht ihre eigenen Teams,
+  Owner, Shogun und Council sehen alle.
+- Coach-Panel, Organisations-Zentrale (Team Manager), Content-Studio, Streaming-Panel, Mein Dashboard (Spieler): Gerüst steht,
+  die Funktionen kommen Schritt für Schritt.
+
+EIGENES OP.GG UND SMURFS
+Jede Person trägt unter "Konto" ihren OP.GG-Link und beliebig viele Smurfs ein. Nur Links von op.gg werden angenommen.
+Auf der Teamseite erscheinen die Links für das ganze Team, dazu ein Knopf für den OP.GG-Multilink des Teams.
+
+BEKANNTE PERSONEN EINRICHTEN (einmalig, nur Owner)
+In der Shogun-Zentrale gibt es den Knopf "Bekannte Personen einrichten". Er setzt bei vorhandenen Konten Funktion, Team und
+Ingame-Namen: axcel (Coach, Fubuki, Hoshi), silas (Coach, Kaze), chris (Coach und Spieler, Fubuki), maybejuli (Spieler, Fubuki).
+Ränge bleiben unverändert. Danach kannst du alles mit "Bearbeiten" anpassen.
+
+DAS MENÜ DER WEBSITE
+Oben stehen nur "Anmelden" (nach der Anmeldung "Mein Bereich"), "Discord" und "Menü". Das Menü führt zu allen Seiten und zur Jarvis-App.
+
+POSITIONEN UND OP.GG
+- Jede Person (auch Community-Mitglieder ohne Team) stellt ihre Position (Top, JGL, Mid, ADC, SUPP oder "Ich spiele nicht") und ihr OP.GG
+  selbst ein: in der App unter "Konto", auf der Website unter "Mein Bereich".
+- Bei der Registrierung auf der Website wird die Position abgefragt. Wer spielt, muss einen OP.GG-Link angeben.
+- Teamlisten (Website und App) zeigen oben den Coach, danach Top, JGL, Mid, ADC, SUPP, zuletzt Subs.
+- Die Positionen der Spieler auf der Website trägst du in der Datei shinzui-kader-liste.xlsx ein und schickst sie Claude zurück.
+
+COACHING-BUCHUNG (zunächst gesperrt)
+- Auf der Website gibt es die Seite "Coaching (bald)" mit Premium = 0 Euro und Preise folgen für Free und Standard.
+- Die Buchung ist gesperrt. Der Owner schaltet sie in der App frei: Bereiche, Shogun-Zentrale, "Coaching freischalten".
+- Solange sie gesperrt ist, kann niemand Anfragen senden, auch nicht über Umwege.
+
+CONTENT-STUDIO
+- Bereich "Content-Studio" in der App (für Social Media Manager, Council mit Sonderrecht, Shogun, Owner).
+- Beitragsart wählen, Team wählen, Gegner und Ergebnis eintippen: Die Grafik entsteht sofort im festen Orga-Design in der Teamfarbe
+  und lässt sich als Bild speichern. Vorlagen: Prime-League-Ergebnis, Matchday, Rank-Up, Roster.
+- Grafiken per Prompt in claude.ai: siehe shinzui-grafikpaket.zip (eigene Anleitung darin).
+
+ZAHLEN & FAKTEN SELBST PFLEGEN
+- Auf der Website unter "Zahlen & Fakten" stehen alle sechs Teams mit Division, Multi-OP.GG, Matches, Siegen, Niederlagen, Winrate, Saisons
+  und "auf der Prime League seit". Die Summen oben rechnen sich daraus von selbst.
+- Wer als Owner oder Shogun angemeldet ist, sieht dort den Knopf "Zahlen bearbeiten". Matches rechnet sich aus Siegen plus Niederlagen,
+  lässt sich aber überschreiben. Mit "Speichern" sind die Zahlen sofort für alle Besucher aktuell. Ein neues Hochladen ist nicht nötig.
+- Die Division gilt gleichzeitig für die Teamkarten. Ändert sich ein Team von Div 6 auf Div 5, trägst du es nur dort ein.
+- Weitere Personen können das Sonderrecht "team stats bearbeiten" in der App bekommen.
+
+SCRIM-ANFRAGEN
+- Jede Teamkarte auf der Website hat den Knopf "Scrim anfragen". Fremde Teams füllen ein kleines Fenster aus (Teamname, Discord, Division, Elo,
+  Wunschzeiten, Nachricht). Das geht ohne Anmeldung, mit Schutz vor Spam (höchstens 5 Anfragen pro Stunde und Gerät).
+- In der App landen die Anfragen im Bereich "Scrim-Anfragen". Coaches und Team Manager sehen die Anfragen ihres Teams, Owner, Shogun und
+  Council sehen alle (Council nur lesend). Anfragen lassen sich annehmen oder ablehnen. Die Antwort an das fremde Team schickt ihr selbst über Discord.
+
+GRAFIKEN IN DER APP
+- Im Content-Studio: "Grafik speichern" legt die Grafik in die Galerie. Sie erscheint sofort im Team-Bereich des Teams und in der Galerie des Studios.
+- Eine in Claude erstellte Grafik lädst du im Content-Studio unter "Fertige Grafik hochladen" mit einem Klick hoch.
+- Wer ein Team sieht, sieht auch dessen Grafiken. Löschen darf die Person, die sie angelegt hat, sowie Owner und Shogun.
+
+RIOT-RÄNGE (Rang, LP, Siege, Niederlagen, Winrate)
+EINRICHTEN
+1. Auf developer.riotgames.com ein Konto anlegen und einen Schlüssel erzeugen. Ein Entwicklerschlüssel läuft nach 24 Stunden ab und taugt zum Testen.
+   Für den Dauerbetrieb den Produktionsschlüssel beantragen (Produkt registrieren, Website-Adresse angeben).
+2. In Netlify unter Site configuration, Environment variables eine neue Variable anlegen: Name RIOT_API_KEY, Wert der Schlüssel.
+   Den Schlüssel NIEMALS in Chats, Dateien oder GitHub schreiben.
+3. Danach einen neuen Deploy auslösen (Deploys, Trigger deploy).
+4. In der App: Bereiche, Schnittstellen, "Alle Ränge jetzt aktualisieren". Das holt alle Accounts in einem Rutsch (dauert etwa eine Minute).
+WIE ES FUNKTIONIERT
+- Die Accounts kommen aus den OP.GG-Links der Website-Kader und der Konten (Format .../Name-TAG). Gezählt wird die Solo/Duo-Rangliste (Europa West).
+- Jeder Account wird höchstens einmal pro Tag bei Riot abgefragt und zwischengespeichert. Besucher der Website lösen nie mehr als das aus.
+- Website: Bei jedem Spieler stehen Rang, LP, Siege, Niederlagen und Winrate, bei jedem Team der Durchschnitts-Rang.
+- App, Spieler-Dashboard (Owner, Shogun, Council): alle Spieler mit Rang, die Durchschnitts-Elo der Org und je Team. Coaches zählen nicht in den Durchschnitt.
+- In den Team-Bereichen der App steht der Rang bei jedem Mitglied.
+- Ist der Schlüssel abgelaufen, zeigt "Schnittstellen" eine Meldung. Die alten Werte bleiben stehen, bis ein neuer Schlüssel hinterlegt ist.
+- Neue Spieler: OP.GG-Link eintragen (Website-Kader im Editor, Konten unter "Konto"). Beim nächsten Abruf erscheinen sie.
+
+DIE APP AUF DEM HANDY
+- Android: App im Browser öffnen und "Installieren" bzw. "Zum Startbildschirm hinzufügen" wählen.
+- iPhone: In Safari unten auf Teilen tippen und "Zum Home-Bildschirm" wählen.
+
+PASSWORT VERGESSEN
+Das Management klickt in der App im Tab "Mitglieder" bei der Person auf "Passwort zurücksetzen" und gibt das neue Passwort weiter.
+
+WEBSITE ÄNDERN
+- Texte, Teams, Spieler, Management und Links: Footer "Management", im Editor anmelden, ändern und "Online veröffentlichen".
+  Dazu muss man gleichzeitig im Mitgliederbereich mit einer Rolle angemeldet sein, die veröffentlichen darf
+  (Projektleitung, Stellvertretung). Das geht ohne neues Hochladen.
+- Fotos: Dateien in public/images/spieler bzw. public/images/management bei GitHub hochladen (Dateinamen siehe LIES-MICH.txt).
+  Netlify aktualisiert die Seite danach automatisch.
+- Inhalte der Pakete: im Mitgliederbereich, Tab "Inhalte bearbeiten".
+
+SICHERHEIT
+- Passwörter werden nur als Prüfwert gespeichert (scrypt mit eigenem Salz). Niemand kann sie auslesen, auch ihr nicht.
+- Nach 8 falschen Anmeldeversuchen wird die Anmeldung für 15 Minuten gesperrt.
+- Das GitHub-Repository muss PRIVAT bleiben. Es enthält keine Passwörter, aber auch den Programmcode.
+- Das Impressum und die Datenschutzerklärung müssen noch ergänzt werden. Bei Netlify braucht ihr einen
+  Auftragsverarbeitungsvertrag. Wer unter 18 ist, sollte mit Einwilligung der Eltern registriert werden.
+
+PROBLEME
+- "Das System ist noch nicht eingerichtet": Die Variable ERSTES_PASSWORT fehlt oder hat weniger als 8 Zeichen. Eintragen
+  und neu deployen.
+- "Das Anmeldesystem ist noch nicht verbunden": Die Funktion wurde nicht mit deployt. Prüfe, ob der Ordner netlify/functions
+  samt package.json und netlify.toml in GitHub liegt, und schau im Netlify-Projekt unter "Functions" nach.
+- Deploy bricht ab: In Netlify unter "Deploys" auf den fehlgeschlagenen Deploy klicken und die Fehlermeldung an Claude schicken.
